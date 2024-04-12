@@ -1,6 +1,11 @@
 import streamlit as st
 from api_calls import create_uuid, upload_file_to_gcs, send_to_api, fetch_audio_files, search_audio_files
 
+st.set_page_config(
+    page_title="Music Streaming App",
+    page_icon="💿",
+)
+
 st.title('💿 Music Streaming App')
 
 tab1, tab2, tab3 = st.tabs(["Stream", "Search", "Upload"])

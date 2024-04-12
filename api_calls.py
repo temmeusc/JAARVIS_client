@@ -28,6 +28,7 @@ def upload_file_to_gcs(file):
     bucket = client.bucket(BUCKET_NAME)
     blob = bucket.blob(create_uuid() + ".wav")
     blob.upload_from_string(file.getvalue(), content_type=file.type)
+    blob.make_public()
 
     return f"https://storage.cloud.google.com/{BUCKET_NAME}/{blob.name}"
 

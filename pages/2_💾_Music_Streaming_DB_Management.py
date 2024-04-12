@@ -3,10 +3,13 @@ import requests
 import pandas as pd
 from api_calls import send_to_api, fetch_audio_files, search_audio_files, update_audio_file, delete_audio_file
 
-# Streamlit UI
-st.title("Music Streaming Database Management")
+st.set_page_config(
+    page_title="Music Streaming Database Management",
+    page_icon="💾",
+)
 
-# Tabs for different operations
+st.title("💾 Music Streaming Database Management")
+
 tab1, tab2, tab3, tab4 = st.tabs(["View Entries", "Upload Entries", "Edit Entries", "Delete Entries"])
 
 with tab1:
