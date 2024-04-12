@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
-from modules.api_calls import send_to_api, fetch_audio_files, search_audio_files, update_audio_file, delete_audio_file
+from api_calls import send_to_api, fetch_audio_files, search_audio_files, update_audio_file, delete_audio_file
 
 # Streamlit UI
 st.title("Music Streaming Database Management")

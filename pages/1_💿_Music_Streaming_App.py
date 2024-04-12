@@ -1,5 +1,5 @@
 import streamlit as st
-from modules.api_calls import create_uuid, upload_file_to_gcs, send_to_api, fetch_audio_files, search_audio_files
+from api_calls import create_uuid, upload_file_to_gcs, send_to_api, fetch_audio_files, search_audio_files
 
 st.title('💿 Music Streaming App')
 
