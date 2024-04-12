@@ -4,7 +4,6 @@
 
 ```
 pip install -r requirements.txt
-
 ```
 
 ## **Usage**
@@ -13,10 +12,11 @@ pip install -r requirements.txt
 
 ```
 streamlit run Readme.py
-
 ```
 
 2. Access the application in your web browser at `http://localhost:8501`.
+
+3. Different pages will be loaded from the /pages folder.
 
 ## **Dependencies**
 
