@@ -22,8 +22,12 @@ st.markdown(
     - MongoDB database to store audio file information, running on EC2
 
     ## Architechture Diagram
-    ![Architecture Diagram](/architecture.png)
+    """
+)
 
+st.image("https://github.com/simulcast/dsci551-client/blob/main/architecture.png?raw=true.png", use_column_width=True)
+st.markdown(
+    """
     ## Middleware
     ### `main.py`
     The `main.py` file is the main server script for the Music Streaming App. It implements a Flask-based API that handles various endpoints for managing audio files and user authentication. The API communicates with a MongoDB database to store and retrieve audio file metadata and user information.
