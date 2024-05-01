@@ -78,7 +78,7 @@ st.markdown(
 
 
     **Hash Function**
-    - The hash_function() is a utility function that generates a hash value based on the artist name and track name. It has the following steps...
+    - The `hash_function()` is a utility function that generates a hash value based on the artist name and track name. It has the following steps...
         - Extract Initials from Names
             - Artist Initials: The function first looks at the artist's name, takes the first letter of the first word and the first letter of the last word to form the artist initials. 
                 - For example, from "Taylor Swift", it takes 'T' from "Taylor" and 'S' from "Swift" to make "TS".
