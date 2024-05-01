@@ -283,6 +283,11 @@ st.markdown(
     - Add error handling for GCS file upload failures.
     - Implement file size restrictions and validation for uploaded files.
 
+    **More Secure Authentication**
+    - Implement password hashing using sha256 over bcrypt for better security.
+    - Add password complexity requirements and validation during registration.
+    - Implement password reset functionality using email verification.
+
     **User Roles and Permissions**
     - Implement role-based access control (RBAC) to differentiate between regular users and administrators.
     - Define different permissions for each role, such as viewing, uploading, editing, and deleting audio files.

@@ -8,9 +8,9 @@ SERVICE_ACCOUNT_FILE = './dependencies/dsci551-416302-9c06656dc6b8.json'
 BUCKET_NAME = 'dsci551-project'
 
 # Global API endpoint
-# API_BASE_URL = 'http://127.0.0.1:5000' # Choose this if running locally
+API_BASE_URL = 'http://127.0.0.1:5001' # Choose this if running locally
 
-API_BASE_URL = 'https://dsci551-server-production.up.railway.app'
+# API_BASE_URL = 'https://dsci551-server-production.up.railway.app'
 
 # Authenticate using service account
 credentials = service_account.Credentials.from_service_account_file(
@@ -98,3 +98,19 @@ def update_audio_file(audio_id, artist_name=None, track_name=None, file_url=None
 def delete_audio_file(id):
     response = requests.delete(f'{API_BASE_URL}/api/audio/delete/{id}')
     return response.json()
+
+def login(username, password):
+    response = requests.post(f"{API_BASE_URL}/api/login", json={"username": username, "password": password})
+    if response.status_code == 200:
+        return True
+    else:
+        return False
+
+def register(username, password):
+    print(f"Registering user {username} with password {password}")
+    response = requests.post(f"{API_BASE_URL}/api/register", json={"username": username, "password": password})
+    print(response)
+    if response.status_code == 201:
+        return True
+    else:
+        return False
