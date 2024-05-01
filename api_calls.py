@@ -8,9 +8,9 @@ SERVICE_ACCOUNT_FILE = './dependencies/dsci551-416302-9c06656dc6b8.json'
 BUCKET_NAME = 'dsci551-project'
 
 # Global API endpoint
-API_BASE_URL = 'http://127.0.0.1:5001' # Choose this if running locally
+# API_BASE_URL = 'http://127.0.0.1:5001' # Choose this if running locally
 
-# API_BASE_URL = 'https://dsci551-server-production.up.railway.app'
+API_BASE_URL = 'https://dsci551-server-production.up.railway.app'
 
 # Authenticate using service account
 credentials = service_account.Credentials.from_service_account_file(
