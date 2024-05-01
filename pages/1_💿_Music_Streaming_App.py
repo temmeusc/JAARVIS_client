@@ -52,7 +52,7 @@ if not st.session_state.logged_in:
     with tab2:
         register_page()
 else: 
-    tab1, tab2, tab3, tab4 = st.tabs(["Stream", "Search", "Upload", "Login / Sign Up"])
+    tab1, tab2, tab3 = st.tabs(["Stream", "Search", "Upload"])
 
     with tab1:
         # sort by most recent
@@ -123,28 +123,3 @@ else:
                 st.warning("Please choose a file with .mp3, .ogg, or .wav extension.")
         elif submit_button:
             st.warning("Please enter an artist name, a track name, and choose a file to upload.")
-
-    with tab4:
-        st.title("Login")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-
-        if st.button("Login"):
-            if login(username, password):
-                st.success("Logged in successfully!")
-            else:
-                st.error("Invalid username or password.")
-
-        st.title("Register")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        confirm_password = st.text_input("Confirm Password", type="password")
-
-        if st.button("Register"):
-            if password != confirm_password:
-                st.error("Passwords do not match.")
-            else:
-                if register(username, password):
-                    st.success("User registered successfully!")
-                else:
-                    st.error("Username already exists.")
