@@ -14,7 +14,7 @@ pip install -r requirements.txt
 streamlit run Readme.py
 ```
 
-2. Access the application in your web browser at `http://localhost:8501`.
+2. Access the application in your web browser at `http://localhost:8501`. By default, this will connect to production server at `https://dsci551-server-production.up.railway.app`. To run with a local server, change the `API_BASE_URL` variable in `api_calls.py` to `http://127.0.0.1:5001`
 
 3. Different pages will be loaded from the /pages folder.
 
