@@ -1,4 +1,4 @@
-# **[Live Site](https://dsci551-client-production.up.railway.app/)**
+# **[Live Site and Documentation](https://dsci551-client-production.up.railway.app/)**
 **Site is live at [https://dsci551-client-production.up.railway.app/](https://dsci551-client-production.up.railway.app/)**
 
 **Please see site for documentation. To run locally, follow instructions below.**
