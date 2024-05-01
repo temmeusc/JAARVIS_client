@@ -21,15 +21,55 @@ st.markdown(
     - A middleware API to route requests from the front end and database administrator sites through a hash function
     - MongoDB database to store audio file information, running on EC2
 
-    ## Architechture Diagram
+    ## Planned Implementation (from original proposal)
+    We plan to build a basic music streaming service. The front end experience will be a vertical feed of audio files that users have uploaded to the database, displaying track title and artist name. Users will be able to add their own submissions and see those appear at the top of the feed. It will be built with React.
+    
+    The database administrator experience will be a tabular data view that allows a data administrator to bulk edit or delete entries. It will be built with Streamlit.
+    
+    We’ll build a middleware API that will route requests from the front end and database administrator sites through a hash function and to a distributed MongoDB database.
+
+    In the midterm progress report, we updated our plan to use Streamlit for both the front end and database administrator sites. We also decided to use Google Cloud Storage to store audio files and MongoDB to store audio file information.
+    
+    ## Architechture
     """
 )
 
 st.image("https://github.com/simulcast/dsci551-client/blob/main/architecture.png?raw=true.png", use_column_width=True)
 st.markdown(
     """
-    ## Middleware
-    ### `main.py`
+    **User Interface (Streamlit App)**
+    - The user-facing frontend is built using Streamlit, a Python library for creating interactive web applications.
+    - There are two Streamlit pages
+        - "Music Streaming App" (`1_💿_Music_Streaming_App.py`): Allows users to stream, search, and upload audio files.
+        - "Music Streaming Database Management" (`2_💾_Music_Streaming_DB_Management.py`): Provides database management functionalities for administrators, such as viewing, uploading, editing, and deleting audio files.
+
+    **Middleware (Flask Server)**
+    - The Flask server (`main.py`) acts as an intermediary between the user interface and the database.
+    - It exposes API endpoints for handling various operations related to audio files, such as uploading, listing, searching, editing, and deleting.
+    - The middleware communicates with the database (MongoDB) to perform CRUD (Create, Read, Update, Delete) operations on audio metadata.
+
+    **Cloud File Storage (Google Cloud GCS)**
+    - When a user uploads an audio file, it is first uploaded to GCS, and the corresponding file URL is stored in the database.
+    - The middleware interacts with GCS to handle file uploads and retrievals.
+    - See future scope below for additional thoughts on improving GCS file management features.
+
+    **Database (MongoDB)**
+    - The MongoDB database is used to store audio metadata, such as artist name, track name, file URL, and collection information.
+    - The middleware communicates with the MongoDB database to perform CRUD operations on audio metadata.
+    - The database is organized into collections based on a hashing function that determines the collection name for each audio file.
+
+    The flow of data and interactions between the components is as follows:
+    - Users interact with the Streamlit user interface to stream, search, upload, edit, or delete audio files.
+    - The Streamlit app sends requests to the Flask middleware server via API calls.
+    - The Flask server processes the requests, interacts with the MongoDB database to perform the required operations, and returns the results back to the Streamlit app.
+    - When an audio file is uploaded, the Flask server first uploads the file to Google Cloud Storage and obtains the file URL.
+    - The file URL, along with other metadata, is then stored in the MongoDB database.
+    - When a user requests to stream or download an audio file, the Streamlit app retrieves the file URL from the database and serves the file to the user.
+
+    This architecture allows for a separation of concerns, with the user interface, middleware, file storage, and database each handling specific responsibilities.
+    
+    ## Implementation
+    ### Middleware `main.py`
     The `main.py` file is the main server script for the Music Streaming App. It implements a Flask-based API that handles various endpoints for managing audio files and user authentication. The API communicates with a MongoDB database to store and retrieve audio file metadata and user information.
 
     **Database Connection**
@@ -131,8 +171,7 @@ st.markdown(
     - It is set to listen on all available network interfaces (`host='0.0.0.0'`).
     - The server port is determined by the environment variable `PORT` if available, otherwise it defaults to port `5000`.
 
-    ## Client Application
-    ### `1_💿_Music_Streaming_App.py`
+    ### Client Application `1_💿_Music_Streaming_App.py`
     This Streamlit page represents the main user interface for the Music Streaming App. It allows users to stream, search, and upload audio files.
 
     **Authentication**
@@ -158,7 +197,7 @@ st.markdown(
     - Users can upload a new audio file by providing the artist name, track name, and selecting the audio file.
     - The file is uploaded to Google Cloud Storage using the `upload_file_to_gcs()` function from `api_calls.py` and the metadata is sent to the API using the `send_to_api()` function.  
 
-    ### `2_💾_Music_Streaming_DB_Management.py`
+    ### DB Manager Application `2_💾_Music_Streaming_DB_Management.py`
 
     This Streamlit page serves as a database management interface for administrators. It allows administrators to view, upload, edit, and delete audio file entries in the database.
 
@@ -193,7 +232,7 @@ st.markdown(
     - The deletion is performed by sending a request to the API using the `delete_audio_file()` function from `api_calls.py`.
     - Administrators can also perform bulk deletions by uploading a CSV file containing the track IDs to be deleted.
     
-    ### `api_calls.py`
+    ### API Helper `api_calls.py`
     This module contains helper functions for interacting with the API, including functions for user authentication (login and registration) and various operations related to audio files (upload, fetch, search, update, delete).
     - `create_uuid()` Generates a random UUID and returns it as a 32-character string without hyphens.
     - `upload_file_to_gcs(file)` Uploads a file to Google Cloud Storage (GCS) using the provided service account credentials. It generates a unique filename using create_uuid() and returns the public URL of the uploaded file.
@@ -205,7 +244,37 @@ st.markdown(
     - `login(username, password)` Sends a POST request to the API endpoint /login with the provided username and password as a JSON payload. It returns True if the login is successful (status code 200), otherwise it returns False.
     - `register(username, password)` Sends a POST request to the API endpoint /register with the provided username and password as a JSON payload. It returns True if the registration is successful (status code 201), otherwise it returns False.
     
-    ## Future Improvements
+    ### Requirements and Dependencies `requirements.txt`
+    The `requirements.txt` file lists all the Python packages required to run the Music Streaming App. It includes the following packages:
+    - Flask==3.0.3
+    - Flask_Cors==4.0.0
+    - pandas==2.0.0
+    - protobuf>=3.20,<5
+    - pymongo==4.6.3
+    - modules==1.0.0
+    - Requests==2.31.0
+    - streamlit==1.32.0
+    - Werkzeug==3.0.2
+    - google-cloud-storage>=1.45.0
+
+    ## Learning Outcomes
+    **Challenges Faced**
+    - Setting up the MongoDB database and configuring the connection to the Flask server.
+    - Implementing user authentication and session management in the Streamlit app.
+    - Handling file uploads to Google Cloud Storage and storing file URLs in the database.
+    - Managing the flow of data between the Streamlit app, Flask server, Google Cloud Storage, and MongoDB database.
+    - Implementing CRUD operations for audio files in the middleware API.
+    - Handling errors and exceptions in API endpoints and user interactions.
+
+    ## Individual Contribution
+    - Tristan Rodman: Worked on the Streamlit front-end application, including the user authentication, streaming, search, and upload functionalities. Also contributed to the API helper functions and documentation.
+    - James Temme: Worked on MongoDB setup, database connection, and Flask middleware. Also contributed to the client API helper functions and documentation.
+    - Zian Tang: Worked on hash function and Flask middleware. Also contributed to the client API helper functions and documentation.
+
+    ## Conclusion
+    The Music Streaming App project provided us with valuable experience in building a full-stack web application using Streamlit, Flask, MongoDB, and Google Cloud Storage. We learned how to design and implement user interfaces, middleware APIs, and database interactions to create a functional and user-friendly application. The project helped us improve our skills in web development, API design, database management, and cloud storage integration. We faced various challenges during the development process, but we were able to overcome them through collaboration, problem-solving, and continuous learning. Overall, the project was a great learning experience that allowed us to apply our knowledge and skills in a real-world scenario.
+
+    ## Future Scope
     
     **Better GCS File Management**
     - Add functionality to delete files from GCS when an audio file is deleted from the database based on the file URL.
