@@ -294,5 +294,29 @@ st.markdown(
     - Add an admin panel to manage user roles and permissions.
     - Secure API endpoints based on user roles and permissions.
     - Implement user authentication using JWT tokens for better security.
+
+    **Enhanced MongoDB Sharding for Scalability**
+    - As our Music Streaming App grows in user base and data volume, scaling our database efficiently becomes crucial. To address this, we plan to implement sharding directly through MongoDB.
+    - Sharding will allow us to distribute our data across multiple servers, enhancing our app's performance and scalability by reducing the load on any single server and increasing fault tolerance.
+    - **Implementation Strategy**
+        - Shard Key Selection
+            - We will identify appropriate shard keys for our main collections
+            - A good shard key should have high cardinality, write distribution, and query isolation. [`file_id` and `upload_date` make sense for our audio collections]
+        - Sharded Cluster
+            - Our Mongo deployment will transition from a single replica set to a sharded cluster consisting of several shards (each of which are a replica).
+            - This setup will involve shard servers, config servers, and query routers
+            - We will deploy the mongos service as part of our Flask middleware, allowing our application to interact transparently with our sharded database [MusicalChairs]
+            - The mongos instances will route queries to the appropriate shards & manage the data distribution complexity
+        - Data Migration and Balancing
+            - After initializing the sharded cluster, we will migrate existing data to the our new cluster
+            - MongoDB’s sharding mechanism automatically balances data across shards to ensure even distribution
+        - Query Optimization
+            - Post-migration, we will optimize queries to ensure they are making efficient use of indexes and minimizing cross-shard operations
+        - Maintenance, Monitoring, Security & Access Control
+            - By implementing sharding, we aim to enhance our application’s scalability and performance, ensuring that it remains robust and responsive as it scales
+        - Security and Access Control
+            - Shards will be secured using role-based access controls, ensuring that only authorized services and users have access to sensitive data
+            - All communications between cluster components will be encrypted to prevent unauthorized data access
+            - This strategy supports future growth and improves the resilience and efficiency of our database operations
     """
 )
