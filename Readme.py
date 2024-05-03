@@ -30,7 +30,7 @@ st.markdown(
 
     In the midterm progress report, we updated our plan to use Streamlit for both the front end and database administrator sites. We also decided to use Google Cloud Storage to store audio files and MongoDB to store audio file information.
     
-    ## Architechture
+    ## Architecture
     """
 )
 
