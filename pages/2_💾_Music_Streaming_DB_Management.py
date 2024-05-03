@@ -188,7 +188,7 @@ else:
             if result['success']:
                 st.success(f"Deleted audio file with ID {id_to_delete}")
             else:
-                st.error(f"Could not delete audio file with ID {id_to_delete} — check if the ID is correct.")
+                st.error(result['message'])
         
         st.header("Bulk Delete via .csv")
         delete_file = st.file_uploader("Upload a .csv file with a a single column named 'trackID' to delete multiple audio files.")
