@@ -47,7 +47,7 @@ if not st.session_state.logged_in:
     with tab1:
         if login_page():
             st.session_state.logged_in = True
-            st.experimental_rerun()
+            st.rerun()
 
     with tab2:
         register_page()
