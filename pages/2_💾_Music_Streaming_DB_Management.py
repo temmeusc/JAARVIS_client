@@ -182,7 +182,7 @@ else:
 
     with tab4:
         st.header("Delete Audio File")
-        id_to_delete = st.text_input("Audio File ID to Delete", key="delete_id")
+        id_to_delete = st.text_input("Track ID to Delete", key="delete_id")
         delete_button = st.button("Delete Audio File", disabled=not id_to_delete)
         
         if delete_button:
