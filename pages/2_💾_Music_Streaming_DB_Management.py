@@ -67,13 +67,15 @@ else:
             result = fetch_audio_files(page, limit=entries_per_page)
             if result['success']:
                 data = result['data']
-                # rename columns artistName to Artist Name, trackName to Track Name, fileUrl to URL, collection_tag to Collection Number, _id to Track ID
+                print(data[0])
+                # rename columns
                 for item in data:
                     item['Artist Name'] = item.pop('artistName')
                     item['Track Name'] = item.pop('trackName')
                     item['URL'] = item.pop('fileUrl')
                     item['Collection Number'] = item.pop('collection_tag')
-                    item['Track ID'] = item.pop('_id')
+                    item['Track ID'] = item.pop('audio_id')
+                    item['Metadata ID'] = item.pop('_id')
                     item['Upload Date'] = item.pop('created_at', None)
                 df = pd.DataFrame(data)
                 st.dataframe(df)
